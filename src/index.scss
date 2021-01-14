@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&family=VT323&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 4px 0;
+    padding: 0;
+    font-family: 'Orbitron', sans-serif;
+    background-color: #cfdbd5;
+}
+
+@mixin center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    @include center();
+    min-height: 100vh;
+}
+
+#display {
+    display: flex;
+    background-color: #333533;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.pads-wrapper {
+    display: grid;
+    align-self: center;
+    grid-gap: 10px;
+    grid-template-columns: 90px 90px 90px;
+    max-width: 300px;
+}
+
+.drum-pad {
+    @include center();
+    height: 90px;
+    background-color: #f5cb5c;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 1.5em;
+}
+
+.active-drum {
+  background-color: purple;
+
+  transition: all 2s ease;
+}
+
+.console {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    width: 300px;
+    color:#64dfdf;
+
+    h1 { 
+        font-size: 25px;
+    }
+
+    .power-btn {
+        background-color: transparent;
+        border-radius: 50%;
+        color: #8ac926;
+        font-size: 20px;
+        cursor: pointer;
+        height: 50px;
+        width: 50px;
+        position: relative;
+        top: 7px;
+    }
+}
+
+button:focus, button:active {
+       outline: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between !important;
+}
+
+.display-console {
+    color: #212529;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-family: 'VT323', monospace;
+    padding: 10px;
+    transition: all 0.2s ease;
+    background:rgba(72,191,227,1);
+    box-shadow:
+      inset 1px 1px 6px 0px #050505,
+      0px 0px 4px 2px #000,
+      0px 0px 4px 2px #777;
+
+    #sound-display {
+      font-size: 30px;
+      height: 35px;
+    }
+
+    #volume-display, #bank-display  {
+      font-size: 20px;
+    }
+}
+
+.power-off {
+    color: rgba(45,45,45,1);
+}
+
+.display-off {
+  background:rgba(45,45,45,1);
+  box-shadow:
+    inset 1px 1px 7px 0px #050505,
+    0px 0px 4px 2px #000,
+    0px 0px 4px 2px #777;
+}
+
+.off {
+  display: none;
+}
+
+.bank {
+  display: flex;
+  justify-content: space-around;
+
+  button {
+    margin: 10px 0;
+    font-family: 'Orbitron', sans-serif;
+    background-color: #f5cb5c;
+    border: 2px solid darkgoldenrod;
+    &:active {
+      box-shadow:
+      inset 1px 1px 7px 0px darkgoldenrod;
+    }
+  }
+
+}
+
+.volume-control {
+  display: flex;
+  justify-content: space-around;
+}
+
+// slider settings
+
+$track-color: #000 !default;
+$thumb-color: #607d8b !default;
+
+$thumb-radius: 0 !default;
+$thumb-height: 20px !default;
+$thumb-width: 15px !default;
+$thumb-shadow-size: 4px !default;
+$thumb-shadow-blur: 4px !default;
+$thumb-shadow-color: rgba(0, 0, 0, .2) !default;
+$thumb-border-width: 2px !default;
+$thumb-border-color: #212529 !default;
+
+$track-width: 150px !default;
+$track-height: 8px !default;
+$track-shadow-size: 1px !default;
+$track-shadow-blur: 1px !default;
+$track-shadow-color: rgba(0, 0, 0, .2) !default;
+$track-border-width: 2px !default;
+$track-border-color: #212529 !default;
+
+$track-radius: 5px !default;
+$contrast: 5% !default;
+
+$ie-bottom-track-color: darken($track-color, $contrast) !default;
+
+@mixin shadow($shadow-size, $shadow-blur, $shadow-color) {
+  box-shadow: $shadow-size $shadow-size $shadow-blur $shadow-color, 0 0 $shadow-size lighten($shadow-color, 5%);
+}
+
+@mixin track {
+  cursor: default;
+  height: $track-height;
+  transition: all .2s ease;
+  width: $track-width;
+}
+
+@mixin thumb {
+  @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
+  background: $thumb-color;
+  border: $thumb-border-width solid $thumb-border-color;
+  border-radius: $thumb-radius;
+  box-sizing: border-box;
+  cursor: default;
+  height: $thumb-height;
+  width: $thumb-width;
+}
+
+[type='range'] {
+  -webkit-appearance: none;
+  background: transparent;
+  margin: $thumb-height / 2 0;
+  width: $track-width;
+
+  &::-moz-focus-outer {
+    border: 0;
+  }
+
+  &:focus {
+    outline: 0;
+
+    &::-webkit-slider-runnable-track {
+      background: lighten($track-color, $contrast);
+    }
+
+    &::-ms-fill-lower {
+      background: $track-color;
+    }
+
+    &::-ms-fill-upper {
+      background: lighten($track-color, $contrast);
+    }
+  }
+
+  &::-webkit-slider-runnable-track {
+    @include track;
+    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: $track-color;
+    border: $track-border-width solid $track-border-color;
+    border-radius: $track-radius;
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb;
+    -webkit-appearance: none;
+    margin-top: ((-$track-border-width * 2 + $track-height) / 2 - $thumb-height / 2);
+  }
+
+  &::-moz-range-track {
+    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    @include track;
+    background: $track-color;
+    border: $track-border-width solid $track-border-color;
+    border-radius: $track-radius;
+    height: $track-height / 2;
+  }
+
+  &::-moz-range-thumb {
+    @include thumb;
+  }
+
+  &::-ms-track {
+    @include track;
+    background: transparent;
+    border-color: transparent;
+    border-width: ($thumb-height / 2) 0;
+    color: transparent;
+  }
+
+  &::-ms-fill-lower {
+    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: $ie-bottom-track-color;
+    border: $track-border-width solid $track-border-color;
+    border-radius: ($track-radius * 2);
+  }
+
+  &::-ms-fill-upper {
+    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: $track-color;
+    border: $track-border-width solid $track-border-color;
+    border-radius: ($track-radius * 2);
+  }
+
+  &::-ms-thumb {
+    @include thumb;
+    margin-top: $track-height / 4;
+  }
+
+  &:disabled {
+    &::-webkit-slider-thumb,
+    &::-moz-range-thumb,
+    &::-ms-thumb,
+    &::-webkit-slider-runnable-track,
+    &::-ms-fill-lower,
+    &::-ms-fill-upper {
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #display {
+    flex-direction: column;
+  }
+}
